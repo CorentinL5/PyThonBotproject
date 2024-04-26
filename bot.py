@@ -1,47 +1,42 @@
 import discord
-import logging
-import logging.handlers
+from discord_logger import DiscordLogger
 
-intents = discord.Intents.default()
-intents.message_content = True
-
-client = discord.Client(intents=intents)
+logger = DiscordLogger().get_logger()
 
 
-logger = logging.getLogger('discord')
-logger.setLevel(logging.DEBUG)
-logging.getLogger('discord.http').setLevel(logging.INFO)
+class DiscordBot:
+    def __init__(self):
+        intents = discord.Intents.default()
+        intents.message_content = True
 
-handler = logging.handlers.RotatingFileHandler(
-    filename='discord.log',
-    encoding='utf-8',
-    maxBytes=32 * 1024 * 1024,  # 32 MiB
-    backupCount=5,  # Rotate through 5 files
-)
-dt_fmt = '%Y-%m-%d %H:%M:%S'
-formatter = logging.Formatter('[{asctime}] [{levelname:<8}] {name}: {message}', dt_fmt, style='{')
-handler.setFormatter(formatter)
-logger.addHandler(handler)
+        self.client = discord.Client(intents=intents)
 
-@client.event
-async def on_ready():
-    print(f'We have logged in as {client.user}')
+        @self.client.event
+        async def on_ready():
+            print(f'We have logged in as {self.client.user}')
+            logger.info(f'We have logged in as {self.client.user}')
 
+        @self.client.event
+        async def on_message(message):
+            if message.author == self.client.user:
+                return
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
+            if message.content.startswith('$hello'):
+                await message.channel.send('Hello!')
+                logger.info(f'Hello message sent to {message.channel}')
+            else:
+                await message.channel.send('Whut??')
+                logger.info(f'Unknown message sent to {message.channel}')
 
-    if message.content.startswith('$hello'):
-        await message.channel.send('Hello!')
-    else:
-        await message.channel.send('Whut??')
+    def run(self):
+        with open("assets/token.txt", "r") as f:
+            token = f.read().strip()
 
-
-with open("assets/token.txt", "r") as f:
-    token = f.read().strip()
+        self.client.run(token, log_handler=None)
 
 
+if __name__ == "__main__":
+    print("Starting bot...")
 
-client.run(token, log_handler=None)
+    bot = DiscordBot()
+    bot.run()
