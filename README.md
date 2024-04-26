@@ -6,7 +6,6 @@ PyThonBotproject is a small Python project created for fun, with the aim of lear
 ## Installation
 
 To run this project, you will need to install the discord.py library. You can do this by executing the following command in your terminal:
-
 ```
 pip install discord
 ```
