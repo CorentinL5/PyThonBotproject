@@ -1,5 +1,5 @@
 import datetime
-import discord
+import discord as discord
 from discord import app_commands
 
 with open("assets/token.txt", "r") as f:
@@ -8,12 +8,11 @@ GUILD_ID = 1202606516675289168
 ROLE_ID = 1233425063982665809
 
 
-
 class ButtonView(discord.ui.View):
     def __init__(self) -> None:
         super().__init__(timeout=None)
 
-    @discord.ui.button(label="verify", style=discord.ButtonStyle.green, custom_id="role_button")
+    @discord.ui.button(label="verify", style=discord.ButtonStyle.green, custom_id="role_button", emoji="✅")
     async def verify(self, interaction: discord.Interaction,):
         if type(client.role) is not discord.Role:
             client.role = interaction.guild.get_role(ROLE_ID)
@@ -47,15 +46,17 @@ client = Aclient()
 tree = app_commands.CommandTree(client)
 
 
-@tree.command(guild=discord.Object(id=GUILD_ID), name='tester', description='testing')  # guild specific slash command
+@tree.command(guild=discord.Object(id=GUILD_ID), name='tester', description='testing')
 async def slash2(interaction: discord.Interaction):
-    hey = discord.Embed(title="Hey", description=f"This is a test {interaction.user.mention}", color=0x00ff00)
-    hey.set_thumbnail(url=interaction.user.avatar)
-    await interaction.response.send_message(embed=hey, ephemeral=True)
+    embed = discord.Embed(title="Hey", description=f"This is a test {interaction.user.mention}", color=0x00ff00)
+    embed.set_thumbnail(url=interaction.user.avatar)
+    await interaction.response.send_message(embed=embed, ephemeral=True, view=btn1)
 
 
-@tree.command(guild=discord.Object(id=GUILD_ID), name='button', description='Launches a button!')  
-# guild specific slash command
+@tree.command(guild=discord.Object(id=GUILD_ID), name='button', description='Launches a button!')
 async def launch_button(interaction: discord.Interaction):
-    await interaction.response.send_message(view=ButtonView())
+    embed = discord.Embed(title="Hey", description=f"This is a test {interaction.user.mention}", color=0x00ff00)
+    await interaction.response.send_message(embed=embed, view=ButtonView())
+
+
 client.run(TOKEN)

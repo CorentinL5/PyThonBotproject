@@ -19,12 +19,12 @@ pip install discord
 
 ## Configuration
 
-1. **Install Dependencies:** Run `pip install -r assets/requirements.txt` to install all necessary dependencies.
+1. **Install Dependencies:** Run `pip install -r requirements.txt` to install all necessary dependencies.
 
 2. **Get a Discord Token:** Visit the [Discord Developer Portal](https://discord.com/developers/applications) to create a new application.
 <br>Then, add a bot to this application and **copy the generated token**.
    
-3. **Create a `token.txt` File:** Create the file in the [`assets/`](assets) directory of your project and paste the Discord bot token there.
+3. **Create a `token.txt` File:** Create the file in the [`assets`](assets) directory of your project and paste the Discord bot token there.
 > [!WARNING]
 > Avoid committing your `token.txt` file to a public repository to prevent unauthorized access to your Discord bot.
 
