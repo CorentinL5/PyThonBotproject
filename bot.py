@@ -1,40 +1,61 @@
+import datetime
 import discord
-from discord.ext import commands
-from discord_logger import DiscordLogger
+from discord import app_commands
 
-logger = DiscordLogger().get_logger()
+with open("assets/token.txt", "r") as f:
+    TOKEN = f.read().strip()
+GUILD_ID = 1202606516675289168
+ROLE_ID = 1233425063982665809
 
-intents = discord.Intents.default()
-intents.message_content = True
 
 
-class DiscordBot:
+class ButtonView(discord.ui.View):
+    def __init__(self) -> None:
+        super().__init__(timeout=None)
+
+    @discord.ui.button(label="verify", style=discord.ButtonStyle.green, custom_id="role_button")
+    async def verify(self, interaction: discord.Interaction,):
+        if type(client.role) is not discord.Role:
+            client.role = interaction.guild.get_role(ROLE_ID)
+        if client.role not in interaction.user.roles:
+            await interaction.user.add_roles(client.role)
+            await interaction.response.send_message(f"I have given you {client.role.mention}!", ephemeral=True)
+        else:
+            await interaction.response.send_message(f"You already have {client.role.mention}!", ephemeral=True)
+
+
+class Aclient(discord.Client):
     def __init__(self):
+        super().__init__(intents=discord.Intents.default())
+        self.synced = True  # we use this so the bot doesn't sync commands more than once
+        self.added = False
+        self.role = ROLE_ID
 
-        self.bot = commands.Bot(command_prefix='$', intents=intents)
-
-        @self.bot.event
-        async def on_ready():
-            logger.info(f'We have logged in as {self.bot.user}')
-            print(f'We have logged in as {self.bot.user}')
-
-        @self.bot.command()
-        async def foo(ctx, arg):
-            await ctx.send(arg)
-
-        @self.bot.command()
-        async def ping(ctx):
-            await ctx.send(f'Pong! {round(self.bot.latency * 1000)}ms')
-
-    def run(self):
-        with open("assets/token.txt", "r") as f:
-            token = f.read().strip()
-
-        self.bot.run(token, log_handler=None)
+    async def on_ready(self):
+        await self.wait_until_ready()
+        if not self.synced:  # check if slash commands have been synced
+            await tree.sync(guild=discord.Object(id=GUILD_ID))  
+            # |-> guild specific: leave blank if global (global registration can take 1-24 hours)
+            self.synced = True
+        if not self.added:
+            self.add_view(ButtonView())
+            self.added = True
+        print(f"We have logged in as {self.user}.")
 
 
-if __name__ == "__main__":
-    print("Starting bot...")
+client = Aclient()
+tree = app_commands.CommandTree(client)
 
-    bot = DiscordBot()
-    bot.run()
+
+@tree.command(guild=discord.Object(id=GUILD_ID), name='tester', description='testing')  # guild specific slash command
+async def slash2(interaction: discord.Interaction):
+    hey = discord.Embed(title="Hey", description=f"This is a test {interaction.user.mention}", color=0x00ff00)
+    hey.set_thumbnail(url=interaction.user.avatar)
+    await interaction.response.send_message(embed=hey, ephemeral=True)
+
+
+@tree.command(guild=discord.Object(id=GUILD_ID), name='button', description='Launches a button!')  
+# guild specific slash command
+async def launch_button(interaction: discord.Interaction):
+    await interaction.response.send_message(view=ButtonView())
+client.run(TOKEN)

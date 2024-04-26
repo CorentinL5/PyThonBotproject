@@ -129,3 +129,5 @@ TEST-**.xml
 # files for the bot token
 token.*
 TOKEN.*
+
+test.py
