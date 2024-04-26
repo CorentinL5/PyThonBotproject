@@ -1,38 +1,36 @@
 import discord
+from discord.ext import commands
 from discord_logger import DiscordLogger
 
 logger = DiscordLogger().get_logger()
 
+intents = discord.Intents.default()
+intents.message_content = True
+
 
 class DiscordBot:
     def __init__(self):
-        intents = discord.Intents.default()
-        intents.message_content = True
 
-        self.client = discord.Client(intents=intents)
+        self.bot = commands.Bot(command_prefix='$', intents=intents)
 
-        @self.client.event
+        @self.bot.event
         async def on_ready():
-            print(f'We have logged in as {self.client.user}')
-            logger.info(f'We have logged in as {self.client.user}')
+            logger.info(f'We have logged in as {self.bot.user}')
+            print(f'We have logged in as {self.bot.user}')
 
-        @self.client.event
-        async def on_message(message):
-            if message.author == self.client.user:
-                return
+        @self.bot.command()
+        async def foo(ctx, arg):
+            await ctx.send(arg)
 
-            if message.content.startswith('$hello'):
-                await message.channel.send('Hello!')
-                logger.info(f'Hello message sent to {message.channel}')
-            else:
-                await message.channel.send('Whut??')
-                logger.info(f'Unknown message sent to {message.channel}')
+        @self.bot.command()
+        async def ping(ctx):
+            await ctx.send(f'Pong! {round(self.bot.latency * 1000)}ms')
 
     def run(self):
         with open("assets/token.txt", "r") as f:
             token = f.read().strip()
 
-        self.client.run(token, log_handler=None)
+        self.bot.run(token, log_handler=None)
 
 
 if __name__ == "__main__":
