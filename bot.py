@@ -18,8 +18,10 @@ async def on_message(message):
 
     if message.content.startswith('$hello'):
         await message.channel.send('Hello!')
+    else:
+        await message.channel.send('Whut??')
 
 
-with open("token.txt", "r") as f:
+with open("assets/token.txt", "r") as f:
     token = f.read().strip()
 client.run(token)

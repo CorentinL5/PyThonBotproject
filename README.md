@@ -1,4 +1,5 @@
-# PyThonBotproject
+<img align="right" src="assets/images/BotPy.png" width="175em"> 
+<h1>PyThonBotproject</h1>
 
 PyThonBotproject is a small Python project created for fun, with the aim of learning how to use the discord.py library to create Discord bots.
 
@@ -15,12 +16,12 @@ pip install discord
 
 ## Configuration
 
-1. **Install Dependencies:** Run `pip install -r requirements.txt` to install all necessary dependencies.
+1. **Install Dependencies:** Run `pip install -r assets/requirements.txt` to install all necessary dependencies.
 
 2. **Get a Discord Token:** Visit the [Discord Developer Portal](https://discord.com/developers/applications) to create a new application.
 <br>Then, add a bot to this application and **copy the generated token**.
    
-3. **Create a `token.txt` File:** Create the file in the root directory of your project and paste the Discord bot token there.
+3. **Create a `token.txt` File:** Create the file in the [`assets/`](assets/) directory of your project and paste the Discord bot token there.
 
 ## Usage
 
