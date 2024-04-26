@@ -1,5 +1,6 @@
-<img align="right" src="assets/images/BotPy.png" width="175em"> 
-<h1>PyThonBotproject</h1>
+<img align="left" src="assets/images/BotPy.png" width="70em">
+
+# PyThonBotproject
 
 PyThonBotproject is a small Python project created for fun, with the aim of learning how to use the discord.py library to create Discord bots.
 
