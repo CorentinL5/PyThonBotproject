@@ -48,9 +48,9 @@ tree = app_commands.CommandTree(client)
 
 @tree.command(guild=discord.Object(id=GUILD_ID), name='tester', description='testing')
 async def slash2(interaction: discord.Interaction):
-    embed = discord.Embed(title="Hey", description=f"This is a test {interaction.user.mention}", color=0x00ff00)
+    embed = discord.Embed(title="Hey", description=f"This is a test {interaction.user.mention}", color=0x2B2D31)
     embed.set_thumbnail(url=interaction.user.avatar)
-    await interaction.response.send_message(embed=embed, ephemeral=True, view=btn1)
+    await interaction.response.send_message(embed=embed, ephemeral=True)
 
 
 @tree.command(guild=discord.Object(id=GUILD_ID), name='button', description='Launches a button!')
