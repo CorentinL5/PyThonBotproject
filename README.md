@@ -1,4 +1,7 @@
-<img align="left" src="assets/images/BotPy.png" width="70em">
+<a href="https://wakatime.com/badge/user/579bed4b-39bc-4178-85cd-cca984453d63/project/dd8e59b0-cfad-48a8-a0f0-c1341fad7612">
+   <img align="right" src="https://wakatime.com/badge/user/579bed4b-39bc-4178-85cd-cca984453d63/project/dd8e59b0-cfad-48a8-a0f0-c1341fad7612.svg" alt="wakatime">
+</a>
+<img align="left" src="assets/images/BotPy.png" width="69em">
 
 # PyThonBotproject
 
