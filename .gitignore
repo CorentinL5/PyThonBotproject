@@ -126,8 +126,6 @@ TEST-**.xml
 .DS_Store
 *.env*
 
-# files for the bot token
-token.*
-TOKEN.*
 
-test.py
+# files for data
+data

@@ -1,0 +1,43 @@
+{
+  "flag" : "🇬🇧",
+  "events" : {
+      "on_ready" : {
+          "message" : "Bot Connected as {} !"
+      },
+      "member_join" : {
+            "embed_title" : "Welcome to the server {} !",
+            "embed_description" : "I'm a bot, I'm here to help you. If you need help, use `/help`."
+        },
+      "member_remove" : {
+          "message" : "{} left the server ({}).",
+          "no_permission" : "You don't have the permission to execute this command.",
+          "no_args" : "You must provide arguments to execute this command.",
+          "cooldown" : "You must wait {} seconds before executing this command again."
+      }
+  },
+  "ban" : {
+      "command_name" : "ban",
+      "description" : "Ban someone",
+      "message" : "{} where banned for the following reason : {}"
+  },
+  "ping" : {
+      "command_name" : "ping",
+      "description" : "Answer Pong",
+      "message" : "Pong ! {}ms"
+  },
+  "changelang" : {
+      "timeout" : 30,
+      "command_name" : "changelang",
+      "description" : "Change the bot language",
+      "embed_title" : "Change the bot language",
+      "embed_description" : "To change the bot language, react to the flag corresponding to the desired language.",
+      "embed_footer" : "This message will be deleted in {} seconds.",
+      "success" : "The bot language has been changed to {} !"
+  },
+  "helloworld" : {
+      "command_name" : "helloworld",
+      "description" : "Say hello to the bot",
+      "embed_title" : "Hello World!",
+      "embed_description" : "Hello {} !"
+  }
+}

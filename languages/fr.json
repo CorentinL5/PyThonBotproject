@@ -1,0 +1,40 @@
+{
+  "flag" : "🇫🇷",
+  "events" : {
+      "on_ready" : {
+          "message" : "Bot connecté en tant que {} !"
+      },
+      "member_join" : {
+            "embed_title" : "Bienvenue sur le serveur {} !",
+            "embed_description" : "Je suis un bot, je suis là pour vous aider. Pour voir la liste des commandes, utilisez `/help`."
+        },
+      "member_remove" : {
+          "message" : "{} a quitté le serveur ({})."
+      }
+  },
+  "ban" : {
+      "command_name" : "ban",
+      "description" : "Bannir quelqu'un",
+      "message" : "{} a été banni pour la raison suivante : {}"
+  },
+  "ping" : {
+      "command_name" : "ping",
+      "description" : "Répond Pong",
+      "message" : "Pong ! {}ms"
+  },
+  "changelang" : {
+      "timeout" : 30,
+      "command_name" : "changelang",
+      "description" : "Changer la langue du bot",
+      "embed_title" : "Changer la langue du bot",
+      "embed_description" : "Pour changer la langue du robot, réagissez au drapeau correspondant à la langue souhaitée",
+      "embed_footer" : "Ce message sera supprimé dans {} secondes",
+      "success" : "La langue du robot a été changée en {} !"
+  },
+  "helloworld" : {
+      "command_name" : "helloworld",
+      "description" : "Dire bonjour au bot",
+      "embed_title" : "Bonjour le monde !",
+      "embed_description" : "Salut {} !"
+  }
+}
