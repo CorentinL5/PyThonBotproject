@@ -9,6 +9,6 @@ async def ban_command(interaction: discord.Interaction, user: discord.User, reas
 def setup(tree: app_commands.CommandTree, guild: discord.Object):
     tree.command(
         name=LANGUAGE_MANAGER.command_get("ban", "command_name"),
-        description=LANGUAGE_MANAGER.command_get("ban", "description"),
+        description=LANGUAGE_MANAGER.command_get("ban", "command_description"),
         guild=guild
     )(ban_command)

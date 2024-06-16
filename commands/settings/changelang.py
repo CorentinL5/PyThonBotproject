@@ -46,6 +46,6 @@ async def changelang_command(interaction: discord.Interaction):
 def setup(tree: app_commands.CommandTree, guild: discord.Object):
     tree.command(
         name=LANGUAGE_MANAGER.command_get("changelang", "command_name"),
-        description=LANGUAGE_MANAGER.command_get("changelang", "description"),
+        description=LANGUAGE_MANAGER.command_get("changelang", "command_description"),
         guild=guild
     )(changelang_command)

@@ -1,6 +1,7 @@
-import discord
 import json
 import os
+import discord
+from discord import app_commands
 from datamanager import DataManager
 from langmanager import LangManager
 
@@ -18,6 +19,7 @@ PREFIX = config["prefix"]
 ENCRYPTION_KEY = config["encryption_key"]
 
 COMMANDS_DIRECTORY = config["commands_directory"]
+
 
 GUILD_ID = config["guild_id"]
 MY_GUILD = discord.Object(id=GUILD_ID)
@@ -51,3 +53,11 @@ if LANGUAGE is None:
     LANGUAGE = 'en'
 
 LANGUAGE_MANAGER = LangManager(lang=LANGUAGE, langs=LANGUAGES)
+
+
+# Intents
+intents = discord.Intents.default()
+intents.members = True
+
+CLIENT = discord.Client(intents=intents)
+TREE = app_commands.CommandTree(CLIENT)

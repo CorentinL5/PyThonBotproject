@@ -1,16 +1,16 @@
 import discord
 from discord import app_commands
-from config import DATA_MANAGER
+from config import DATA_MANAGER, LANGUAGE_MANAGER
 
 
-async def ban_command(interaction: discord.Interaction, user: discord.User, reason: str):
-    await interaction.guild.ban(user, reason=reason)
-    await interaction.response.send_message(f"{user.mention} a été banni pour la raison suivante : {reason}")
+async def unban_command(interaction: discord.Interaction, user: discord.User):
+    await interaction.guild.unban(user)
+    await interaction.response.send_message(LANGUAGE_MANAGER.command_get("unban", "message").format(user.name))
 
 
 def setup(tree: app_commands.CommandTree, guild: discord.Object):
     tree.command(
-        name="unban",
-        description="Bannir un utilisateur",
+        name=LANGUAGE_MANAGER.command_get("unban", "command_name"),
+        description=LANGUAGE_MANAGER.command_get("unban", "command_description"),
         guild=guild
-    )(ban_command)
+    )(unban_command)
