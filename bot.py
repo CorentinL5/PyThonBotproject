@@ -37,8 +37,8 @@ async def on_ready():
     await TREE.sync(guild=MY_GUILD)
     for command in TREE.get_commands(guild=MY_GUILD):
         print(f"Command {command.name} is registered")
+    print("-" * 35)
     print(LANGUAGE_MANAGER.event_get("on_ready", "bot_ready").format(CLIENT.user.name))
-
 
 # Start the bot
 CLIENT.run(TOKEN)

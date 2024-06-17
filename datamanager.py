@@ -11,16 +11,15 @@ class DataManager:
         self.key = encryption_key
         self.cipher_suite = Fernet(self.key) if self.key else None
 
-        # Charger les données globales
         self.load_global_data()
 
-    def _encrypt(self, data):
+    def __encrypt(self, data):
         if self.cipher_suite:
             encrypted_data = self.cipher_suite.encrypt(data.encode())
             return encrypted_data.decode()
         return data
 
-    def _decrypt(self, encrypted_data):
+    def __decrypt(self, encrypted_data):
         if self.cipher_suite:
             decrypted_data = self.cipher_suite.decrypt(encrypted_data.encode())
             return decrypted_data.decode()
@@ -31,11 +30,11 @@ class DataManager:
             with open(self.global_file, "r") as f:
                 encrypted_data = f.read()
                 if encrypted_data:
-                    decrypted_data = self._decrypt(encrypted_data)
+                    decrypted_data = self.__decrypt(encrypted_data)
                     self.global_data = json.loads(decrypted_data)
 
     def save_global_data(self):
-        encrypted_data = self._encrypt(json.dumps(self.global_data))
+        encrypted_data = self.__encrypt(json.dumps(self.global_data))
         with open(self.global_file, "w") as f:
             f.write(encrypted_data)
 
@@ -45,14 +44,14 @@ class DataManager:
             with open(server_file, "r") as f:
                 encrypted_data = f.read()
                 if encrypted_data:
-                    decrypted_data = self._decrypt(encrypted_data)
+                    decrypted_data = self.__decrypt(encrypted_data)
                     self.server_data[server_id] = json.loads(decrypted_data)
         else:
             self.server_data[server_id] = {}
 
     def save_server_data(self, server_id):
         server_file = f"{self.server_folder}{server_id}.json"
-        encrypted_data = self._encrypt(json.dumps(self.server_data[server_id]))
+        encrypted_data = self.__encrypt(json.dumps(self.server_data[server_id]))
         with open(server_file, "w") as f:
             f.write(encrypted_data)
 
