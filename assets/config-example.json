@@ -4,5 +4,6 @@
     "commands_directory": "Put_Your_Commands_Directory_Here",
     "prefix": "Put_Your_Prefix_Here",
     "guild_id": "Put_Your_Guild_ID_Here",
-    "owner_id": "Put_Your_User_ID_Here"
+    "owner_id": "Put_Your_User_ID_Here",
+    "in_dev_mode": true
 }

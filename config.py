@@ -5,11 +5,9 @@ from discord import app_commands
 from datamanager import DataManager
 from langmanager import LangManager
 
-
 # Load config.json
 with open("assets/config.json", "r") as f:
     config = json.load(f)
-
 
 # Constants from config.json
 TOKEN = config["token"]
@@ -20,9 +18,13 @@ ENCRYPTION_KEY = config["encryption_key"]
 
 COMMANDS_DIRECTORY = config["commands_directory"]
 
+IN_DEV_MODE = config["in_dev_mode"]
 
-GUILD_ID = config["guild_id"]
-MY_GUILD = discord.Object(id=GUILD_ID)
+if IN_DEV_MODE:
+    GUILD_ID = config["guild_id"]
+    MY_GUILD = discord.Object(id=GUILD_ID)
+else:
+    GUILD_ID = MY_GUILD = None
 
 
 # Other constants
@@ -38,10 +40,8 @@ for root, dirs, files in os.walk(COMMANDS_DIRECTORY):
         if directory != '__pycache__':
             COMMANDS_DIRECTORIES.append(f"{root}/{directory}")
 
-
 # Create a DataManager instance
 DATA_MANAGER = DataManager(ENCRYPTION_KEY)
-
 
 # Gestion of languages
 LANGUAGES = [i.replace('.json', '') for i in os.listdir("languages") if i.endswith('.json')]
@@ -54,7 +54,6 @@ print(LANGUAGE)
 
 LANGUAGE_MANAGER = LangManager(lang=LANGUAGE, langs=LANGUAGES)
 
-
 # Intents
 intents = discord.Intents.default()
 intents.guilds = True
@@ -63,3 +62,12 @@ intents.messages = True
 
 CLIENT = discord.Client(intents=intents)
 TREE = app_commands.CommandTree(CLIENT)
+
+
+def NO_PERM_EMBED(no_perm_command):
+    return discord.Embed(
+        title=LANGUAGE_MANAGER.error_get("no_permission_title"),
+        description=LANGUAGE_MANAGER.error_get("no_permission_description").format(no_perm_command),
+        timestamp=discord.utils.utcnow(),
+        color=discord.Color.red()
+    )
