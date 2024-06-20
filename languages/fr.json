@@ -13,15 +13,26 @@
             "message" : "{} a quitté le serveur ({})"
         }
     },
+    "error" : {
+        "is_bot" : "Vous ne pouvez pas exécuter cette commande sur un bot",
+        "try_error" : "Une erreur s'est produite lors de l'exécution de la commande `/{}`",
+        "no_permission_title" : "Erreur de permission",
+        "no_permission_description" : "Vous n'avez pas la permission d'utiliser **la commande `/{}`**"
+    },
     "ban" : {
         "command_name" : "ban",
         "command_description": "Bannir quelqu'un",
-        "message" : "{} a été banni pour la raison suivante : {}"
+        "embed_title" : "Bannissement de {}",
+        "embed_description" : "Pour la raison suivante **`{}`**",
+        "default_reason" : "Aucune raison spécifiée pour le bannissement"
     },
     "unban" : {
         "command_name" : "ubban",
         "command_description": "Débannir quelqu'un",
-        "message" : "{} a été débanni"
+        "embed_title" : "Débannisement de {}",
+        "embed_description" : "Pour la raison suivante **`{}`**",
+        "default_reason" : "Aucune raison spécifiée pour le débannissement",
+        "not_banned" : "{} n'est pas banni"
     },
     "ping" : {
         "command_name" : "ping",

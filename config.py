@@ -66,8 +66,8 @@ TREE = app_commands.CommandTree(CLIENT)
 
 def NO_PERM_EMBED(no_perm_command):
     return discord.Embed(
-        title=LANGUAGE_MANAGER.error_get("no_permission_title"),
-        description=LANGUAGE_MANAGER.error_get("no_permission_description").format(no_perm_command),
+        title=LANGUAGE_MANAGER.command_get("error", "no_permission_title"),
+        description=LANGUAGE_MANAGER.command_get("error", "no_permission_description").format(no_perm_command),
         timestamp=discord.utils.utcnow(),
         color=discord.Color.red()
     )

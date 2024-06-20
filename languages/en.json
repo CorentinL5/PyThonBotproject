@@ -1,27 +1,38 @@
 {
     "flag" : "🇬🇧",
     "events" : {
-        "on_ready" : {
-            "command_ready" : "Command {} is registered,",
-            "bot_ready" : "Bot Connected as {} !"
+        "on_ready": {
+            "command_ready": "Command {} is registered,",
+            "bot_ready": "Bot Connected as {} !"
         },
-        "member_join" : {
-              "embed_title" : "Welcome to the server {} !",
-              "embed_description" : "I'm a bot, I'm here to help you. If you need help, use `/help`"
-          },
-        "member_remove" : {
-            "message" : "{} left the server ({})"
+        "member_join": {
+            "embed_title": "Welcome to the server {} !",
+            "embed_description": "I'm a bot, I'm here to help you. If you need help, use `/help`"
+        },
+        "member_remove": {
+            "message": "{} left the server ({})"
         }
+    },
+    "error" : {
+        "is_bot" : "You can't do this command on a bot",
+        "try_error" : "An error occurred while executing the command `/{}`",
+        "no_permission_title" : "No permission",
+        "no_permission_description" : "You don't have permission to do **the `/{}` command**"
     },
     "ban" : {
         "command_name" : "ban",
         "command_description": "Ban someone",
-        "message" : "{} where banned for the following reason : {}"
+        "embed_title" : "Ban of {}",
+        "embed_description": "For the following reason **`{}`**",
+        "default_reason" : "No reason provided for the ban"
     },
     "unban" : {
         "command_name" : "unban",
         "command_description": "Unban someone",
-        "message" : "{} where unbanned"
+        "embed_title" : "Unban of {}",
+        "embed_description": "For the following reason **`{}`**",
+        "default_reason" : "No reason provided for the unban",
+        "not_banned" : "{} is not banned"
     },
     "ping" : {
         "command_name" : "ping",
