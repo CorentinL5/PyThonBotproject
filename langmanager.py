@@ -34,6 +34,10 @@ class LangManager:
         json_lang = load_json(self.language)
         return json_lang["events"][event][key]
 
+    def error_get(self, key):
+        json_lang = load_json(self.language)
+        return json_lang["error"][key]
+
     def info_get(self, key):
         json_lang = load_json(self.language)
         return json_lang[key]
