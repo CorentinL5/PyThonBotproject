@@ -47,17 +47,19 @@ DATA_MANAGER = DataManager(ENCRYPTION_KEY)
 LANGUAGES = [i.replace('.json', '') for i in os.listdir("languages") if i.endswith('.json')]
 
 LANGUAGE = DATA_MANAGER.get_server_info(GUILD_ID, "lang")
-print(LANGUAGE)
 if LANGUAGE is None:
     DATA_MANAGER.set_server_info(GUILD_ID, "lang", 'en')
     LANGUAGE = 'en'
+print(LANGUAGE)
 
 LANGUAGE_MANAGER = LangManager(lang=LANGUAGE, langs=LANGUAGES)
 
 
 # Intents
 intents = discord.Intents.default()
+intents.guilds = True
 intents.members = True
+intents.messages = True
 
 CLIENT = discord.Client(intents=intents)
 TREE = app_commands.CommandTree(CLIENT)

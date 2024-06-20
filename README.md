@@ -46,6 +46,7 @@ Contributions are welcome! If you'd like to contribute to this project, please c
 ## License
 
 This project is distributed under the MIT license. See [LICENSE](LICENSE) for more information.
+Copyright (c) 2024 [Corentin Lallement](https://github.com/CorentinL5)
 
 ---
 

@@ -6,7 +6,7 @@ from config import GUILD_ID, BOT_LOGO_ATTACHMENT, BOT_LOGO, LANGUAGE_MANAGER
 async def helloworld_command(interaction: discord.Interaction):
     embed = discord.Embed(
         title=LANGUAGE_MANAGER.command_get("helloworld", "embed_title"),
-        description=LANGUAGE_MANAGER.command_get("helloworld", "embed_description".format(interaction.user)),
+        description=LANGUAGE_MANAGER.command_get("helloworld", "embed_description").format(interaction.user.mention),
         color=discord.Color.blurple()
     )
     embed.set_thumbnail(url=BOT_LOGO_ATTACHMENT)
