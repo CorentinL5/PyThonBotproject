@@ -1,8 +1,0 @@
-{
-    "token": "Put_Your_Token_Here",
-    "encryption_key": "Put_Your_Key_Here",
-    "commands_directory": "./commands",
-    "prefix": "Your_Prefix_Here",
-    "guild_id": "Your_Guild_ID_Here",
-    "owner_id": "Your_User_ID_Here"
-}
