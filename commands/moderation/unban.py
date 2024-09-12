@@ -33,7 +33,7 @@ async def unban_command(interaction: discord.Interaction, user: discord.User, re
         await interaction.response.send_message(embed=embed, ephemeral=True)
 
 
-def setup(tree: app_commands.CommandTree, guild: discord.Object):
+def setup(tree: app_commands.CommandTree, guild):
     tree.command(
         name=LANGUAGE_MANAGER.command_get("unban", "command_name"),
         description=LANGUAGE_MANAGER.command_get("unban", "command_description"),

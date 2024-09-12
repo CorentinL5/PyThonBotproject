@@ -1,6 +1,7 @@
+import asyncio
 import discord
 from discord import app_commands
-from config import DATA_MANAGER, LANGUAGE_MANAGER, TREE, CLIENT
+from config import CLIENT, TREE, MODULE_TREE, DATA_MANAGER, LANGUAGE_MANAGER
 
 
 async def help_command(interaction: discord.Interaction):
@@ -37,9 +38,10 @@ async def help_command(interaction: discord.Interaction):
                 in ["⬅️", "➡️"]
                 and check_reaction.message.id == message.id)
 
-    while True:
+    wait_for_reactions = True
+    while wait_for_reactions:
         try:
-            reaction, user = await CLIENT.wait_for("reaction_add", timeout=60.0, check=check)
+            reaction, user = await CLIENT.wait_for("reaction_add", timeout=30.0, check=check)
 
             if str(reaction.emoji) == "➡️":
                 current_page += 1
@@ -53,10 +55,14 @@ async def help_command(interaction: discord.Interaction):
             await message.edit(embed=embeds[current_page])
             await message.remove_reaction(reaction, user)
         except asyncio.TimeoutError:
-            break
+            print("Timeout")
+            wait_for_reactions = False
+    embeds[current_page].color = discord.Color.red()
+    await message.edit(embed=embeds[current_page])
+    await message.clear_reactions()
 
 
-def setup(tree: app_commands.CommandTree, guild: discord.Object):
+def setup(tree: app_commands.CommandTree, guild):
     tree.command(
         name=LANGUAGE_MANAGER.command_get("help", "command_name"),
         description=LANGUAGE_MANAGER.command_get("help", "command_description"),

@@ -13,6 +13,9 @@
             "message": "{} left the server ({})"
         }
     },
+    "invite_button": {
+        "text": "Invite me"
+    },
     "error" : {
         "is_bot" : "You can't do this command on a bot",
         "try_error" : "An error occurred while executing the command `/{}`",
@@ -45,7 +48,6 @@
         "command_description": "Change the bot language",
         "embed_title" : "Change the bot language",
         "embed_description" : "To change the bot language, react to the flag corresponding to the desired language",
-        "embed_footer" : "This message will be deleted in {} seconds",
         "success" : "The bot language has been changed to {} !"
     },
     "helloworld" : {
@@ -64,3 +66,4 @@
         "embed_field_value" : "Description: `{}`"
     }
 }
+

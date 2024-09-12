@@ -45,7 +45,6 @@
         "command_description": "Changer la langue du bot",
         "embed_title" : "Changer la langue du bot",
         "embed_description" : "Pour changer la langue du robot, réagissez au drapeau correspondant à la langue souhaitée",
-        "embed_footer" : "Ce message sera supprimé dans {} secondes",
         "success" : "La langue du robot a été changée en {} !"
     },
     "helloworld" : {

@@ -1,6 +1,7 @@
 import discord
 from discord import app_commands
-from config import DATA_MANAGER, LANGUAGE_MANAGER
+from config import DATA_MANAGER, LANGUAGE_MANAGER, NO_PERM_EMBED
+import asyncio
 
 
 class LanguageButton(discord.ui.Button):
@@ -22,28 +23,33 @@ class LanguageButton(discord.ui.Button):
 
 
 async def changelang_command(interaction: discord.Interaction):
+    if not interaction.user.guild_permissions.administrator:
+        await interaction.response.send_message(embed=NO_PERM_EMBED(interaction.command.name), ephemeral=True)
+        return
     timeout = LANGUAGE_MANAGER.command_get("changelang", "timeout")
     embed = discord.Embed(
         title=LANGUAGE_MANAGER.command_get("changelang", "embed_title"),
         description=LANGUAGE_MANAGER.command_get("changelang", "embed_description"),
-        color=discord.Color.blurple()
+        color=discord.Color.blurple(),
+        timestamp=discord.utils.utcnow()
     )
-    embed.set_footer(text=LANGUAGE_MANAGER.command_get("changelang", "embed_footer").format(timeout))
     view = discord.ui.View(timeout=timeout)
-    x = LANGUAGE_MANAGER.languages
-    x.remove(LANGUAGE_MANAGER.language)
-    for lang in x:
+    for lang in LANGUAGE_MANAGER.languages:
         button = LanguageButton(
             lang=lang,
             style=discord.ButtonStyle.primary,
             emoji=LANGUAGE_MANAGER.get_flag(lang),
-            custom_id=f"changelang_{lang}"
+            custom_id=f"changelang_{lang}",
+            disabled=lang == DATA_MANAGER.get_server_info(interaction.guild.id, "lang")
         )
         view.add_item(button)
-    await interaction.response.send_message(embed=embed, view=view)
+    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+    message = await interaction.original_response()
+    await view.wait()
+    await message.edit(view=None)
 
 
-def setup(tree: app_commands.CommandTree, guild: discord.Object):
+def setup(tree: app_commands.CommandTree, guild):
     tree.command(
         name=LANGUAGE_MANAGER.command_get("changelang", "command_name"),
         description=LANGUAGE_MANAGER.command_get("changelang", "command_description"),

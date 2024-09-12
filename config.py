@@ -12,19 +12,18 @@ with open("assets/config.json", "r") as f:
 # Constants from config.json
 TOKEN = config["token"]
 
-PREFIX = config["prefix"]
-
 ENCRYPTION_KEY = config["encryption_key"]
 
 COMMANDS_DIRECTORY = config["commands_directory"]
 
 IN_DEV_MODE = config["in_dev_mode"]
 
-if IN_DEV_MODE:
-    GUILD_ID = config["guild_id"]
-    MY_GUILD = discord.Object(id=GUILD_ID)
-else:
-    GUILD_ID = MY_GUILD = None
+ACTIVITY = config["activity"]
+
+BOT_INVITE = config["bot_invite"]
+
+GUILD_ID = config["guild_id"]
+
 
 
 # Other constants
@@ -48,11 +47,11 @@ LANGUAGES = [i.replace('.json', '') for i in os.listdir("languages") if i.endswi
 
 LANGUAGE = DATA_MANAGER.get_server_info(GUILD_ID, "lang")
 if LANGUAGE is None:
-    DATA_MANAGER.set_server_info(GUILD_ID, "lang", 'en')
+    if GUILD_ID is not None:
+        DATA_MANAGER.set_server_info(GUILD_ID, "lang", 'en')
     LANGUAGE = 'en'
-print(LANGUAGE)
 
-LANGUAGE_MANAGER = LangManager(lang=LANGUAGE, langs=LANGUAGES)
+LANGUAGE_MANAGER = LangManager(lang='en', langs=LANGUAGES)
 
 # Intents
 intents = discord.Intents.default()
@@ -62,6 +61,45 @@ intents.messages = True
 
 CLIENT = discord.Client(intents=intents)
 TREE = app_commands.CommandTree(CLIENT)
+MODULE_TREE = []
+
+if IN_DEV_MODE:
+    MY_GUILD = discord.Object(id=GUILD_ID)
+else:
+    MY_GUILD = GUILD_ID = None
+
+if ACTIVITY is not None:
+    if ACTIVITY["status"].lower() == "offline":
+        activity_status = discord.Status.offline
+    elif ACTIVITY["status"].lower() == "idle":
+        activity_status = discord.Status.idle
+    elif ACTIVITY["status"].lower() == "dnd" or "do_not_disturb":
+        activity_status = discord.Status.dnd
+    elif ACTIVITY["status"].lower() == "invisible":
+        activity_status = discord.Status.invisible
+    else:
+        activity_status = discord.Status.online
+
+    if ACTIVITY["type"].lower() == "playing":
+        activity_type = discord.ActivityType.playing
+    elif ACTIVITY["type"].lower() == "streaming":
+        activity_type = discord.ActivityType.streaming
+    elif ACTIVITY["type"].lower() == "listening":
+        activity_type = discord.ActivityType.listening
+    elif ACTIVITY["type"].lower() == "watching":
+        activity_type = discord.ActivityType.watching
+    elif ACTIVITY["type"].lower() == "custom":
+        activity_type = discord.ActivityType.custom
+    else:
+        activity_type = discord.ActivityType.unknown
+
+    # discord.Game(name=ACTIVITY["name"], type=ACTIVITY["type"])
+
+    CLIENT.activity = discord.Activity(name=ACTIVITY["name"],
+                                       type=activity_type
+                                       )
+
+    CLIENT.status = activity_status
 
 
 def NO_PERM_EMBED(no_perm_command):

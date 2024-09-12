@@ -1,6 +1,7 @@
 import os
 import discord
-from config import CLIENT, TREE, LANGUAGE_MANAGER, TOKEN, MY_GUILD, COMMANDS_DIRECTORIES, COMMANDS_DIRECTORY
+from config import (CLIENT, TREE, LANGUAGE_MANAGER, TOKEN, MY_GUILD,
+                    COMMANDS_DIRECTORIES, COMMANDS_DIRECTORY, MODULE_TREE, IN_DEV_MODE)
 
 
 # Load all commands
@@ -14,6 +15,7 @@ for directory in COMMANDS_DIRECTORIES:
                 module_name = f'{directory[2:]}.{filename[:-3]}'
             module = __import__(f'commands.{module_name}', fromlist=['setup'])
             module.setup(TREE, MY_GUILD)
+            MODULE_TREE.append(module_name)
 
 
 @CLIENT.event
@@ -34,11 +36,16 @@ async def on_member_remove(member):
 
 @CLIENT.event
 async def on_ready():
-    await TREE.sync(guild=MY_GUILD)
-    for command in TREE.get_commands(guild=MY_GUILD):
-        print(f"Command {command.name} is registered")
+    try:
+        if IN_DEV_MODE and MY_GUILD:
+            await TREE.sync(guild=MY_GUILD)
+        else:
+            await TREE.sync()
+    except Exception as e:
+        print(e)
     print("-" * 35)
     print(LANGUAGE_MANAGER.event_get("on_ready", "bot_ready").format(CLIENT.user.name))
+
 
 # Start the bot
 CLIENT.run(TOKEN)

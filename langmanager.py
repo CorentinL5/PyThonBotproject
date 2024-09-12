@@ -12,13 +12,24 @@ class LangManager:
             langs = []
         self.language = lang
         self.languages = langs
+
         self.flags = {}
+        self.json_langs = {}
+
+        self.load_languages()
         self.load_flags()
+
+
 
     def load_flags(self):
         for lang in self.languages:
-            json_lang = load_json(lang)
-            self.flags[lang] = json_lang["flag"]
+            self.flags[lang] = self.json_langs[lang]["flag"]
+
+
+    def load_languages(self):
+        for lang in self.languages:
+            self.json_langs[lang] = load_json(lang)
+
 
     def set_lang(self, lang, guild):
         if lang in self.languages:
@@ -27,16 +38,13 @@ class LangManager:
             raise ValueError(f"Langue not supported: {lang}")
 
     def command_get(self, command, key):
-        json_lang = load_json(self.language)
-        return json_lang[command][key]
+        return self.json_langs[self.language][command][key]
 
     def event_get(self, event, key):
-        json_lang = load_json(self.language)
-        return json_lang["events"][event][key]
+        return self.json_langs[self.language]["events"][event][key]
 
     def info_get(self, key):
-        json_lang = load_json(self.language)
-        return json_lang[key]
+        return self.json_langs[self.language][key]
 
     def get_flag(self, lang):
         return self.flags[lang]

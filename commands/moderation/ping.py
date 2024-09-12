@@ -10,7 +10,7 @@ async def ping_command(interaction: discord.Interaction):
     await message.add_reaction("🏓")
 
 
-def setup(tree: app_commands.CommandTree, guild: discord.Object):
+def setup(tree: app_commands.CommandTree, guild):
     tree.command(
         name=LANGUAGE_MANAGER.command_get("ping", "command_name"),
         description=LANGUAGE_MANAGER.command_get("ping", "command_description"),
